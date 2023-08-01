@@ -61,9 +61,9 @@
 - React
 - TypeScript
 - Redux Toolkit
+- React Router
 - SCSS
 - AntD
-- React Router
 
 ## Автор
 
