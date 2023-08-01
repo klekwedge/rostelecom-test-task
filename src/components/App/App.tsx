@@ -5,15 +5,17 @@ import CoursesPage from '../../pages/CoursesPage/CoursesPage';
 import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import './App.scss';
 
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 
 function App() {
   return (
     <Router>
       <Header style={{ display: 'flex', alignItems: 'center', height: 50 }}>
-        <Space>
-          <Link to="/">Главная </Link>
-          <Link to="/courses">Курсы </Link>
+        <Space size="middle">
+          <Link to="/" style={{ color: 'white' }}>
+            Главная
+          </Link>
+          <Link to="/courses"  style={{ color: 'white' }}>Курсы </Link>
         </Space>
       </Header>
       <div className="app">
