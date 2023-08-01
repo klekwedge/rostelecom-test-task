@@ -7,9 +7,9 @@ const API_KEY = import.meta.env.VITE_API_KEY
 
 const initialState: CurrentCoursesState = {
     base: '',
-    courses: {},
     currentUSDCourse: 0,
-    currencies: {}
+    currencies: {},
+    rates: {},
 };
 
 export const fetchCourse = createAsyncThunk('courses/fetchCourse', () => {
@@ -19,15 +19,13 @@ export const fetchCourse = createAsyncThunk('courses/fetchCourse', () => {
 
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', () => {
     const { request } = useHttp();
-    return request(`http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}`);
+    return request(`https://openexchangerates.org/api/latest.json?base=USD&app_id=${API_KEY}`);
 });
 
 export const fetchCurrencies = createAsyncThunk('courses/fetchCurrencies', () => {
     const { request } = useHttp();
     return request('https://openexchangerates.org/api/currencies.json');
 });
-
-
 
 const coursesSlice = createSlice({
     name: 'courses',
@@ -51,8 +49,7 @@ const coursesSlice = createSlice({
             })
             .addCase(fetchCourses.fulfilled, (state, action) => {
                 // state.postsLoadingStatus = 'idle';
-                state.base = action.payload.base;
-                state.courses = action.payload.rates;
+                state.rates = action.payload.rates;
             })
             .addCase(fetchCourses.rejected, (state) => {
                 // state.postsLoadingStatus = 'error';
@@ -61,7 +58,6 @@ const coursesSlice = createSlice({
                 // state.postsLoadingStatus = 'loading';
             })
             .addCase(fetchCourse.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state.currentUSDCourse = action.payload.rates.RUB
             })
             .addCase(fetchCourse.rejected, (state) => {

@@ -1,9 +1,9 @@
 
 export interface CurrentCoursesState {
     base: string;
-    courses: ICourse;
     currentUSDCourse: number;
-    currencies : ICurrency
+    currencies : ICurrency;
+    rates: ICourse
 };
 
 export interface ICourse {
