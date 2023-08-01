@@ -5,7 +5,7 @@ import { fetchCourse } from '../../slices/coursesSlice/coursesSlice';
 
 function MainPage() {
   const [dollarValue, setDollarValue] = useState<number | null>(null);
-  const { base, courses, currentUSDCourse } = useAppSelector((state) => state.courses);
+  const { currentUSDCourse } = useAppSelector((state) => state.courses);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
