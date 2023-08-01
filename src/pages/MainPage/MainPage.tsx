@@ -1,5 +1,17 @@
+import { InputNumber } from 'antd';
+import { useEffect } from 'react';
+
 function MainPage() {
-  return <div>111</div>;
+  useEffect(() => {
+    console.log(import.meta.env.VITE_API_KEY);
+  }, []);
+
+  return (
+    <div>
+      <InputNumber />
+      <InputNumber />
+    </div>
+  );
 }
 
 export default MainPage;
