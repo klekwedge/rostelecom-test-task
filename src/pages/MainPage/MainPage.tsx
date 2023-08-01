@@ -1,16 +1,33 @@
-import { InputNumber } from 'antd';
-import { useEffect } from 'react';
+import { InputNumber, Space } from 'antd';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hook';
+import { fetchCourse } from '../../slices/coursesSlice/coursesSlice';
 
 function MainPage() {
+  const [dollarValue, setDollarValue] = useState<number | null>(null);
+  const { base, courses, currentUSDCourse } = useAppSelector((state) => state.courses);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    console.log(import.meta.env.VITE_API_KEY);
+    dispatch(fetchCourse());
   }, []);
 
   return (
-    <div>
-      <InputNumber />
-      <InputNumber />
-    </div>
+    <Space direction="vertical">
+      <InputNumber
+        value={dollarValue}
+        onChange={(value) => setDollarValue(value)}
+        style={{ width: '220px' }}
+        placeholder="Введите сумму в доларах"
+        addonBefore="$"
+      />
+      <InputNumber
+        value={dollarValue && (dollarValue * currentUSDCourse).toFixed(0)}
+        readOnly
+        addonBefore="₽"
+        style={{ width: '220px' }}
+      />
+    </Space>
   );
 }
 
