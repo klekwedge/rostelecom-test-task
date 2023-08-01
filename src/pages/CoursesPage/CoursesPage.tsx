@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
-import { Select } from 'antd';
+import { useEffect, useState } from 'react';
+import { Select, Pagination } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hook';
 import { fetchCourses, fetchCurrencies } from '../../slices/coursesSlice/coursesSlice';
 import './CoursesPage.scss';
 
 function CoursesPage() {
   const { currencies, rates } = useAppSelector((state) => state.courses);
+  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,12 +29,23 @@ function CoursesPage() {
       />
 
       <div className="cards">
-        {Object.entries(rates).map((rate) => (
-          <div className="card">
-            1 USD = {rate[1]} {rate[0]}
-          </div>
-        ))}
+        {Object.entries(rates)
+          .map((rate) => (
+            <div className="card">
+              1 USD = {rate[1]} {rate[0]}
+            </div>
+          ))
+          .slice((currentPage - 1) * 10, currentPage * 10)}
       </div>
+
+      {rates && (
+        <Pagination
+          defaultCurrent={currentPage}
+          onChange={(value) => setCurrentPage(value)}
+          total={Object.values(rates).length}
+          showSizeChanger={false}
+        />
+      )}
     </>
   );
 }
