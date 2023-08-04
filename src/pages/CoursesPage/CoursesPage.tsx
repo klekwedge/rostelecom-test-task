@@ -7,6 +7,7 @@ import { fetchCourses, fetchCurrencies } from '../../slices/coursesSlice/courses
 import './CoursesPage.scss';
 import Card from '../../components/Card/Card';
 import Loader from '../../components/Loader/Loader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 function CoursesPage() {
   const { currencies, rates, currenciesLoading } = useAppSelector((state) => state.courses);
@@ -28,9 +29,9 @@ function CoursesPage() {
     return <Loader />;
   }
 
-  // if (currenciesLoading === 'error') {
-  //   return <Loader />;
-  // }
+  if (currenciesLoading === 'error') {
+    return <ErrorMessage />;
+  }
 
   return (
     <>

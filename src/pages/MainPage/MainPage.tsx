@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hook';
 import { fetchCourse } from '../../slices/coursesSlice/coursesSlice';
 import Loader from '../../components/Loader/Loader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 function MainPage() {
   const [dollarValue, setDollarValue] = useState<number | null>(null);
@@ -15,6 +16,10 @@ function MainPage() {
 
   if (currentUSDCourseLoading === 'loading') {
     return <Loader />;
+  }
+
+  if (currentUSDCourseLoading === 'error') {
+    return <ErrorMessage />;
   }
 
   return (

@@ -40,14 +40,11 @@ const coursesSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCurrencies.pending, (state) => {
-                state.currenciesLoading = 'loading';
             })
             .addCase(fetchCurrencies.fulfilled, (state, action) => {
                 state.currencies = action.payload
-                state.currenciesLoading = 'idle';
             })
             .addCase(fetchCurrencies.rejected, (state) => {
-                state.currenciesLoading = 'error';
             })
             .addCase(fetchCourses.pending, (state) => {
                 state.currenciesLoading = 'loading';
