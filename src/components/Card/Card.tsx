@@ -1,6 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal, Alert } from 'antd';
-import { Line } from '@ant-design/plots';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+  },
+};
+
+const labels = [
+  'Январь',
+  'Февраль',
+  'Март',
+  'Апрель',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Август',
+  'Сентябрь',
+  'Октябрь',
+  'Ноябрь',
+  'Декабрь',
+];
+
+export const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Курс в 2022 году',
+      data: [83, 82, 79, 84, 81, 75, 82, 85, 91, 87, 92, 87],
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    },
+  ],
+};
 
 interface ICardProps {
   rate: [string, number];
@@ -8,20 +56,6 @@ interface ICardProps {
 
 function Card({ rate }: ICardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState([]);
-
-  const asyncFetch = () => {
-    fetch('https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json')
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log('fetch data failed', error);
-      });
-  };
-
-  useEffect(() => {
-    asyncFetch();
-  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -56,17 +90,7 @@ function Card({ rate }: ICardProps) {
           type="error"
           style={{ marginBottom: 30 }}
         />
-        <Line
-          data={data}
-          padding="auto"
-          xField="Date"
-          yField="scales"
-          xAxis={{
-            // type: 'timeCat',
-            tickCount: 5,
-          }}
-        />
-        ;
+        <Line options={options} data={data} title="" />
       </Modal>
     </>
   );
