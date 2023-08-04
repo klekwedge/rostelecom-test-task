@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useState } from 'react';
-import { Select, Pagination } from 'antd';
+import { v4 } from 'uuid';
+import { Select, Pagination, Alert } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hook';
 import { fetchCourses, fetchCurrencies } from '../../slices/coursesSlice/coursesSlice';
 import './CoursesPage.scss';
+import Card from '../../components/Card/Card';
 
 function CoursesPage() {
   const { currencies, rates } = useAppSelector((state) => state.courses);
@@ -11,15 +14,22 @@ function CoursesPage() {
 
   useEffect(() => {
     dispatch(fetchCurrencies());
-    dispatch(fetchCourses());
+    dispatch(fetchCourses("USD"));
   }, []);
 
   const handleChange = (value: string) => {
-    // dispatch(fetchCourses())
+    // ! В бесплатном плане нельзя выбрать базовую валюту относительно которой можно смотреть курс по отношению к другим валютам.
+    // ! В бесплатном плане по-умолчанию можно посмотреть только доллар.
+    // dispatch(fetchCourses(value))
   };
 
   return (
     <>
+      <Alert
+        message="Внимание, в бесплатном плане нельзя выбрать базовую валюту относительно которой можно смотреть курс по отношению к другим валютам. В бесплатном плане по-умолчанию можно посмотреть только доллар."
+        type="error"
+        style={{ marginBottom: 30 }}
+      />
       <Select
         defaultValue="USD"
         placeholder="Базовая валюта"
@@ -27,17 +37,13 @@ function CoursesPage() {
         onChange={handleChange}
         options={Object.entries(currencies).map((item) => ({ value: item[0], label: item[1] }))}
       />
-
       <div className="cards">
         {Object.entries(rates)
+          .slice((currentPage - 1) * 10, currentPage * 10)
           .map((rate) => (
-            <div className="card">
-              1 USD = {rate[1]} {rate[0]}
-            </div>
-          ))
-          .slice((currentPage - 1) * 10, currentPage * 10)}
+            <Card key={v4()} rate={rate} />
+          ))}
       </div>
-
       {rates && (
         <Pagination
           defaultCurrent={currentPage}

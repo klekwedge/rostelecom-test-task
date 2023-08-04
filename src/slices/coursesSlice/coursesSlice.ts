@@ -17,9 +17,12 @@ export const fetchCourse = createAsyncThunk('courses/fetchCourse', () => {
     return request(`https://openexchangerates.org/api/latest.json?symbols=RUB&base=USD&app_id=${API_KEY}`);
 });
 
-export const fetchCourses = createAsyncThunk('courses/fetchCourses', () => {
+export const fetchCourses = createAsyncThunk('courses/fetchCourses', (value: string) => {
+    // ! В бесплатном плане нельзя выбрать базовую валюту относительно которой можно смотреть курс по отношению к другим валютам.
+    // ! В бесплатном плане по-умолчанию можно посмотреть только доллар.
+
     const { request } = useHttp();
-    return request(`https://openexchangerates.org/api/latest.json?base=USD&app_id=${API_KEY}`);
+    return request(`https://openexchangerates.org/api/latest.json?base=${value}&app_id=${API_KEY}`);
 });
 
 export const fetchCurrencies = createAsyncThunk('courses/fetchCurrencies', () => {
@@ -38,8 +41,8 @@ const coursesSlice = createSlice({
                 // state.postsLoadingStatus = 'loading';
             })
             .addCase(fetchCurrencies.fulfilled, (state, action) => {
-
                 state.currencies = action.payload
+                // state.postsLoadingStatus = 'loading';
             })
             .addCase(fetchCurrencies.rejected, (state) => {
                 // state.postsLoadingStatus = 'error';
