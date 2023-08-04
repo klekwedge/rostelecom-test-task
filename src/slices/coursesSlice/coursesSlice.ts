@@ -7,7 +7,9 @@ const API_KEY = import.meta.env.VITE_API_KEY
 
 const initialState: CurrentCoursesState = {
     base: '',
+    currentUSDCourseLoading: 'loading',
     currentUSDCourse: 0,
+    currenciesLoading: 'loading',
     currencies: {},
     rates: {},
 };
@@ -38,33 +40,34 @@ const coursesSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCurrencies.pending, (state) => {
-                // state.postsLoadingStatus = 'loading';
+                state.currenciesLoading = 'loading';
             })
             .addCase(fetchCurrencies.fulfilled, (state, action) => {
                 state.currencies = action.payload
-                // state.postsLoadingStatus = 'loading';
+                state.currenciesLoading = 'idle';
             })
             .addCase(fetchCurrencies.rejected, (state) => {
-                // state.postsLoadingStatus = 'error';
+                state.currenciesLoading = 'error';
             })
             .addCase(fetchCourses.pending, (state) => {
-                // state.postsLoadingStatus = 'loading';
+                state.currenciesLoading = 'loading';
             })
             .addCase(fetchCourses.fulfilled, (state, action) => {
-                // state.postsLoadingStatus = 'idle';
+                state.currenciesLoading = 'idle';
                 state.rates = action.payload.rates;
             })
             .addCase(fetchCourses.rejected, (state) => {
-                // state.postsLoadingStatus = 'error';
+                state.currenciesLoading = 'error';
             })
             .addCase(fetchCourse.pending, (state) => {
-                // state.postsLoadingStatus = 'loading';
+                state.currentUSDCourseLoading = 'loading';
             })
             .addCase(fetchCourse.fulfilled, (state, action) => {
                 state.currentUSDCourse = action.payload.rates.RUB
+                state.currentUSDCourseLoading = 'idle'
             })
             .addCase(fetchCourse.rejected, (state) => {
-                // state.postsLoadingStatus = 'error';
+                state.currentUSDCourseLoading = 'error';
             })
     },
 });

@@ -6,15 +6,16 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux-hook';
 import { fetchCourses, fetchCurrencies } from '../../slices/coursesSlice/coursesSlice';
 import './CoursesPage.scss';
 import Card from '../../components/Card/Card';
+import Loader from '../../components/Loader/Loader';
 
 function CoursesPage() {
-  const { currencies, rates } = useAppSelector((state) => state.courses);
+  const { currencies, rates, currenciesLoading } = useAppSelector((state) => state.courses);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchCurrencies());
-    dispatch(fetchCourses("USD"));
+    dispatch(fetchCourses('USD'));
   }, []);
 
   const handleChange = (value: string) => {
@@ -22,6 +23,14 @@ function CoursesPage() {
     // ! В бесплатном плане по-умолчанию можно посмотреть только доллар.
     // dispatch(fetchCourses(value))
   };
+
+  if (currenciesLoading === 'loading') {
+    return <Loader />;
+  }
+
+  // if (currenciesLoading === 'error') {
+  //   return <Loader />;
+  // }
 
   return (
     <>

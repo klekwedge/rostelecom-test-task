@@ -2,15 +2,20 @@ import { InputNumber, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hook';
 import { fetchCourse } from '../../slices/coursesSlice/coursesSlice';
+import Loader from '../../components/Loader/Loader';
 
 function MainPage() {
   const [dollarValue, setDollarValue] = useState<number | null>(null);
-  const { currentUSDCourse } = useAppSelector((state) => state.courses);
+  const { currentUSDCourse, currentUSDCourseLoading } = useAppSelector((state) => state.courses);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchCourse());
   }, []);
+
+  if (currentUSDCourseLoading === 'loading') {
+    return <Loader />;
+  }
 
   return (
     <Space direction="vertical">

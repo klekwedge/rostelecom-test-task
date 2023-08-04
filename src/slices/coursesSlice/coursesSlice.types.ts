@@ -2,7 +2,9 @@
 export interface CurrentCoursesState {
     base: string;
     currentUSDCourse: number;
-    currencies : ICurrency;
+    currentUSDCourseLoading: Loading,
+    currencies: ICurrency;
+    currenciesLoading: Loading,
     rates: ICourse
 };
 
@@ -13,3 +15,5 @@ export interface ICourse {
 export interface ICurrency {
     [index: string]: string;
 }
+
+export type Loading = "loading" | "idle" | "error"
