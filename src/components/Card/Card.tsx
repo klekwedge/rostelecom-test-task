@@ -72,7 +72,7 @@ function Card({ rate }: ICardProps) {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        111 1 USD = {rate[1]} {rate[0]}
+        1 USD = {rate[1]} {rate[0]}
       </Button>
       <Modal
         title="Таймлайн курса"
