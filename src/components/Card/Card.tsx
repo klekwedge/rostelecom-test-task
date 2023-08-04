@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Alert } from 'antd';
 import { Line } from '@ant-design/plots';
@@ -18,17 +17,6 @@ function Card({ rate }: ICardProps) {
       .catch((error) => {
         console.log('fetch data failed', error);
       });
-  };
-
-  const config = {
-    data,
-    padding: 'auto',
-    xField: 'Date',
-    yField: 'scales',
-    xAxis: {
-      // type: 'timeCat',
-      tickCount: 5,
-    },
   };
 
   useEffect(() => {
@@ -68,7 +56,17 @@ function Card({ rate }: ICardProps) {
           type="error"
           style={{ marginBottom: 30 }}
         />
-        <Line {...config} />;
+        <Line
+          data={data}
+          padding="auto"
+          xField="Date"
+          yField="scales"
+          xAxis={{
+            // type: 'timeCat',
+            tickCount: 5,
+          }}
+        />
+        ;
       </Modal>
     </>
   );
