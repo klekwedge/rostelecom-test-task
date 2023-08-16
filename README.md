@@ -1,5 +1,7 @@
 # Конвертирование валют
 
+**You can also read this README in [English](https://github.com/klekwedge/rostelecom-test-task/blob/main/README.EN.md).**
+
 ## Оглавление
 
 - [Инструкции по развертыванию](#инструкции-по-развертыванию)

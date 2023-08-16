@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
 import { Select, Pagination, Alert } from 'antd';
