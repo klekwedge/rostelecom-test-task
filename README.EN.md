@@ -63,8 +63,9 @@ You can complete the task in your github account, or send a zip-archive with you
 - React
 - TypeScript
 - Redux Toolkit
+- React Router
 - SCSS
-- Chakra UI
+- AntD
 
 ### What I learned
 
